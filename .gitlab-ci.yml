@@ -1,0 +1,23 @@
+image: node:9.6.1
+pages:
+  stage: deploy
+  cache:
+    paths:
+    - node_modules/
+  script:
+  - npm install
+  - npm run build
+  - mkdir .public
+  - cp -r build/* .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+    - master
+
+unit test:
+  stage: test
+  script:
+    - npm install --progress=false
+    - npm run unit

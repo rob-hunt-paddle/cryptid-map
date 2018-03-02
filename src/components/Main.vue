@@ -98,7 +98,7 @@ import moment from 'moment';
 import { db } from '../main';
 
 export default {
-  name: 'HelloWorld',
+  name: 'Main',
   data() {
     return {
       cryptids: [],
