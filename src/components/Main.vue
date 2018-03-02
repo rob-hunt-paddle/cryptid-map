@@ -114,7 +114,7 @@ export default {
       references: [{
         name: '',
         url: '',
-        date: null,
+        date: moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
       }],
       showForm: false,
       showInfo: false,
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     addCryptid(name, image, description, lat, lng, references = []) {
-      const createdAt = moment.now.format('MM/DD/YYYY hh:mm:ss');
+      const createdAt = moment().format('MM/DD/YYYY hh:mm:ss');
       const location = new firebase.firestore.GeoPoint(parseFloat(lat), parseFloat(lng));
       const formattedReferences = [];
 
@@ -145,13 +145,13 @@ export default {
         formattedReferences.push(reference);
       }
 
-      db.collection('cryptids').add({ name, image, description, location, formattedReferences, createdAt });
+      db.collection('cryptids').add({ name, image, description, location, references: formattedReferences, createdAt });
     },
     addReference() {
       this.references.push({
         name: '',
         url: '',
-        date: null,
+        date: moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
       });
     },
     getCoordinates(item) {
@@ -167,6 +167,7 @@ export default {
     toggleInfo(idx, data) {
       this.showInfo = !this.showInfo;
 
+      console.log(data);
       if (idx !== this.infoIndex) {
         this.showInfo = true;
         this.infoIndex = idx;
